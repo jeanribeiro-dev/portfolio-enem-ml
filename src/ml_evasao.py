@@ -84,23 +84,44 @@ roc = roc_auc_score(last_y_test, y_prob)
 print(f"Acurácia: {acc:.4f}")
 print(f"ROC-AUC: {roc:.4f}")
 
-# Gráfico de Feature Importance
-importances = rf_model.feature_importances_
-features_names = last_X_test.columns
+# Gráfico de Feature Importance (Aprimorado)
+importances = rf_model.feature_importances_ * 100 # Converter para %
+# A ordem exata do X é: ['Q006_num', 'TP_ESCOLA', 'TP_COR_RACA', 'TP_SEXO_num', 'TP_FAIXA_ETARIA']
+features_names = ['Renda Familiar', 'Tipo de Escola', 'Cor / Raça', 'Sexo', 'Faixa Etária']
 
 importance_df = pd.DataFrame({
     'Feature': features_names,
     'Importance': importances
 }).sort_values(by='Importance', ascending=False)
 
+# Estética Premium
 plt.figure(figsize=(10, 6))
-sns.barplot(x='Importance', y='Feature', data=importance_df, palette='viridis')
-plt.title('Importância das Variáveis para Abstenção no ENEM (Random Forest)', pad=20, fontsize=14)
-plt.xlabel('Grau de Importância (Peso)', fontsize=12)
-plt.ylabel('Variáveis Socioeconômicas', fontsize=12)
+sns.set_style("whitegrid")
+ax = sns.barplot(
+    x='Importance', 
+    y='Feature', 
+    data=importance_df, 
+    palette='Blues_r',
+    edgecolor='.2'
+)
+
+# Títulos e labels
+plt.title('O que mais influencia a falta do candidato no ENEM?', pad=20, fontsize=16, fontweight='bold', color='#333333')
+plt.xlabel('Peso de Decisão do Algoritmo (%)', fontsize=12, fontweight='bold', color='#555555')
+plt.ylabel('', fontsize=12)
+
+# Remover bordas desnecessárias
+sns.despine(left=True, bottom=True)
+
+# Adicionar o número exato (Porcentagem) na frente de cada barra
+for i in ax.containers:
+    ax.bar_label(i, fmt='%.1f%%', padding=5, fontsize=12, fontweight='bold', color='#333333')
+
+# Ajustar limite X para as labels não cortarem
+plt.xlim(0, importance_df['Importance'].max() * 1.15)
 plt.tight_layout()
 
 # Salvar gráfico
 os.makedirs('docs', exist_ok=True)
-plt.savefig('docs/feature_importance.png', dpi=300)
-print("\nGráfico gerado e salvo em 'docs/feature_importance.png'")
+plt.savefig('docs/feature_importance.png', dpi=300, bbox_inches='tight')
+print("\nGráfico APRIMORADO gerado e salvo em 'docs/feature_importance.png'")
