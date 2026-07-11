@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Insights - Abstenção ENEM 2023</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header class="glass-header">
+        <div class="header-content">
+            <h1><i data-lucide="brain-circuit"></i> Machine Learning Report</h1>
+            <p>Análise Preditiva e Financeira da Abstenção no ENEM 2023</p>
+        </div>
+        <div class="header-kpis">
+            <div class="kpi-card">
+                <span class="kpi-label">Desperdício Estimado</span>
+                <span class="kpi-value text-red">R$ 161,5 Milhões</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Candidatos Analisados</span>
+                <span class="kpi-value">3.933.955</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Modelo</span>
+                <span class="kpi-value">Random Forest</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="report-section glass-card fade-in">
+            <div class="section-text">
+                <h2>1. Importância das Variáveis (Feature Importance)</h2>
+                <p>Ao rodar um modelo preditivo para classificar os candidatos entre ausentes e presentes, o algoritmo identificou as "pistas" mais fortes. Qual variável mais denuncia que o aluno vai faltar?</p>
+                <div class="insight-box">
+                    <i data-lucide="lightbulb"></i>
+                    <div>
+                        <strong>Insight Executivo:</strong> A <b>Renda Familiar</b> e a <b>Faixa Etária</b> são responsáveis por compor a quase totalidade do peso de decisão. Juntas, provam estatisticamente que a condição socioeconômica fala muito mais alto do que qualquer outro fator logístico.
+                    </div>
+                </div>
+            </div>
+            <div class="section-image">
+                <img src="feature_importance.png" alt="Feature Importance">
+            </div>
+        </section>
+
+        <section class="report-section glass-card reverse fade-in">
+            <div class="section-text">
+                <h2>2. Desperdício Financeiro por Estado</h2>
+                <p>O custo logístico médio estimado pelo Inep por estudante é de aproximadamente R$ 146,00. Quando um estudante não vai, o custo está pago e a prova vai para o lixo.</p>
+                <div class="insight-box danger">
+                    <i data-lucide="alert-triangle"></i>
+                    <div>
+                        <strong>Ponto de Atenção:</strong> Estados superpopulosos do Sudeste lideram o rombo financeiro sozinhos. São Paulo atingiu a marca sombria de R$ 26 Milhões rasgados.
+                    </div>
+                </div>
+            </div>
+            <div class="section-image">
+                <img src="waste_by_state.png" alt="Desperdício por Estado">
+            </div>
+        </section>
+
+        <section class="report-section glass-card fade-in">
+            <div class="section-text">
+                <h2>3. A Curva da Desigualdade</h2>
+                <p>Este gráfico traça o decaimento exato da taxa de abstenção conforme a renda sobe. Ele transforma o sentimento de desigualdade em um fato matemático.</p>
+                <div class="insight-box info">
+                    <i data-lucide="trending-down"></i>
+                    <div>
+                        <strong>Leitura Crítica:</strong> Notem a queda brusca (em formato de degrau) nos primeiros R$ 3.000 de renda. A partir daí, a curva se suaviza. Isso mostra que o risco de evasão está concentrado na extrema fragilidade financeira.
+                    </div>
+                </div>
+            </div>
+            <div class="section-image">
+                <img src="decay_by_income.png" alt="Decaimento por Renda">
+            </div>
+        </section>
+
+        <section class="report-section glass-card reverse fade-in">
+            <div class="section-text">
+                <h2>4. Mapa de Calor de Risco (Renda x Idade)</h2>
+                <p>As duas variáveis que o Machine Learning considerou mais importantes foram agrupadas neste Heatmap. Quanto mais escuro o quadrado, maior é o risco deste candidato faltar.</p>
+                <div class="insight-box warning">
+                    <i data-lucide="flame"></i>
+                    <div>
+                        <strong>A Tempestade Perfeita:</strong> O quadrado vermelho escuro localiza-se nos <b>adultos (+26 anos) com baixíssima renda</b>. Esse é o perfil do trabalhador que abdica do ENEM por necessitar trabalhar ou cuidar da família no final de semana.
+                    </div>
+                </div>
+            </div>
+            <div class="section-image">
+                <img src="heatmap_risk.png" alt="Heatmap de Risco">
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <p>Projeto de Portfólio - Pipeline Out-of-Core Big Data Analytics & Machine Learning</p>
+    </footer>
+
+    <script>
+        // Inicializa ícones Lucide
+        lucide.createIcons();
+
+        // Animação de Fade In simples
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
