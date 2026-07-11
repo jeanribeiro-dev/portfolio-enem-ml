@@ -1,53 +1,104 @@
-# 🧠 Portfólio: Machine Learning & Prejuízo Financeiro na Abstenção do ENEM (2023)
+# 🧠 Portfólio: O Custo da Evasão — Machine Learning aplicado ao ENEM (2023)
 
-Análise preditiva utilizando modelo **Random Forest (Out-of-Core)** para investigar os fatores determinantes da evasão no ENEM e calcular o impacto financeiro (desperdício) aos cofres públicos.
+Modelo preditivo de abstenção treinado sobre **3,9 milhões de registros reais** do INEP, com cálculo do impacto financeiro estimado em **R$ 161,5 milhões** desperdiçados em 2023.
 
-## 🔗 Acesse o Web Report Online
+> Este projeto é a continuação analítica do [Dashboard de Abstenção](https://github.com/jeancribeiro1982-creator/portfolio-enem-abstencao). Enquanto aquele responde *o quê*, este responde o ***por quê*** e o ***quanto custa***.
 
-👉 [Clique aqui para acessar o Relatório Executivo Interativo](https://jeancribeiro1982-creator.github.io/portfolio-enem-ml/)
+## 🔗 Acesse o Relatório Online
 
-## 🚀 Visão Geral do Projeto
+👉 **[Clique aqui para acessar o Relatório Executivo](https://jeancribeiro1982-creator.github.io/portfolio-enem-ml/)**
 
-Este projeto é a segunda parte de uma análise de dados *End-to-End*, focado na extração de **Business Insights** e predições usando a base de microdados real do INEP (3.9 milhões de registros). Todo o pipeline cobre:
+## 💡 Motivação
 
-1. **Big Data Processing (Out-of-Core):** Leitura de uma base gigantesca em blocos de 200 mil a 300 mil linhas (chunks) utilizando `Pandas`, viabilizando o processamento em máquinas com memória RAM limitada.
-2. **Machine Learning:** Treinamento iterativo de um modelo `RandomForestClassifier` (com `warm_start=True`) para prever o risco de abstenção de cada candidato com base em apenas 5 variáveis socioeconômicas.
-3. **Business Analytics:** Tradução do modelo matemático para métricas de negócio reais, como o cálculo do **Rombo Financeiro de R$ 161,5 Milhões**.
-4. **Web Report:** Um dashboard estático (HTML/CSS) com design premium (Glassmorphism) para apresentação executiva dos resultados (hospedado no GitHub Pages).
+Depois de construir o painel de abstenção e ver que estados do Norte e famílias de baixa renda lideravam as faltas, surgiu uma pergunta mais funda: **o que exatamente faz um candidato desistir no dia da prova?**
 
-## 📊 Principais Descobertas e Insights
+A análise descritiva (gráficos de barra, mapas) consegue mostrar *onde* e *quanto*. Mas não consegue dizer *por quê* com precisão estatística. Aí entra o Machine Learning: ao treinar um algoritmo para prever quem vai faltar, ele nos diz quais variáveis têm mais peso nessa decisão — e isso é informação de política pública.
 
-| Dimensão Analisada | Insight Principal |
-| :--- | :--- |
-| **Importância das Variáveis** | A **Renda Familiar** e a **Faixa Etária** são os dois maiores determinantes matemáticos para a evasão de um candidato. |
-| **Custo Financeiro** | Apenas no ano de 2023, estimou-se um desperdício de **R$ 161.580.244,00** em provas impressas para candidatos que não compareceram. |
-| **Curva da Desigualdade** | Ocorre uma queda drástica na taxa de abstenção nos primeiros degraus de aumento de renda, provando o impacto direto da vulnerabilidade extrema. |
-| **Matriz de Risco (Idade x Renda)** | O perfil com risco quase absoluto de falta é composto por **adultos acima de 26 anos com baixíssima renda**, refletindo o conflito do trabalho informal aos domingos. |
+A segunda pergunta era mais pragmática: **quanto dinheiro público vai pelo ralo?** Com o custo médio estimado do INEP de R$ 146 por candidato, a conta é direta.
 
-## 🛠️ Tecnologias Utilizadas
+## 🎯 O que este projeto responde
 
-- **Linguagem:** Python
-- **Manipulação de Dados:** Pandas, Numpy
-- **Machine Learning:** Scikit-Learn (Random Forest)
-- **Visualização de Dados:** Matplotlib, Seaborn
-- **Front-End (Web Report):** HTML5, CSS3, Lucide Icons
+1. Quais fatores socioeconômicos têm mais poder preditivo sobre a abstenção?
+2. Qual o perfil de risco máximo — quem tem maior probabilidade de faltar?
+3. Quanto custa financeiramente cada estado, cada faixa de renda?
 
-## ⚙️ Como Executar Localmente
+## 📊 Principais Resultados
+
+| Análise | Resultado |
+|:---|:---|
+| **Feature Importance** | Renda Familiar e Faixa Etária dominam o critério de decisão do modelo |
+| **ROC-AUC (Out-of-Sample)** | `0.6636` — com apenas 5 variáveis brutas |
+| **Custo estimado desperdiçado** | **R$ 161.580.244** em provas não realizadas |
+| **Perfil de maior risco** | Adultos acima de 26 anos com renda familiar até R$ 1.500 |
+| **Curva da desigualdade** | A taxa de falta cai em degraus conforme a renda sobe nos primeiros R$ 3.000 |
+
+## 🛠️ Stack Tecnológica
+
+| Camada | Tecnologia |
+|:---|:---|
+| Big Data Processing | Python, Pandas (`chunksize` — Out-of-Core) |
+| Machine Learning | Scikit-Learn (`RandomForestClassifier`, `warm_start=True`) |
+| Visualização | Matplotlib, Seaborn |
+| Web Report | HTML5, CSS3 (Glassmorphism), Lucide Icons |
+| Deploy | GitHub Pages |
+
+## ⚙️ Decisão Técnica: Por que Out-of-Core?
+
+O arquivo de microdados do ENEM 2023 tem **3,9 milhões de linhas** e pesa ~1,7 GB. Carregar tudo na RAM de uma só vez é inviável na maioria das máquinas.
+
+A solução foi combinar duas técnicas:
+- **`pd.read_csv(chunksize=200000)`** — leitura em blocos de 200 mil linhas, processando um de cada vez.
+- **`RandomForestClassifier(warm_start=True)`** — permite adicionar novas árvores ao modelo (5 por bloco) sem descartar as anteriores. O modelo "aprende" incrementalmente sem precisar ver todos os dados de uma vez.
+
+O resultado: 20 blocos lidos, 100 árvores construídas, 0 estouros de memória.
+
+## 📂 Estrutura do Projeto
+
+```
+portfolio-enem-ml/
+├── src/
+│   ├── ml_evasao.py            # Treinamento Out-of-Core + Feature Importance
+│   └── business_insights.py    # Análise financeira: custo por UF, curva de renda, heatmap
+├── docs/
+│   ├── index.html              # Relatório executivo web (GitHub Pages)
+│   ├── style.css               # Design Dark Mode + Glassmorphism
+│   ├── feature_importance.png  # Gráfico 1: importância das variáveis
+│   ├── waste_by_state.png      # Gráfico 2: prejuízo por estado (Top 10)
+│   ├── decay_by_income.png     # Gráfico 3: curva de decaimento por renda
+│   └── heatmap_risk.png        # Gráfico 4: matriz de risco Renda × Idade
+├── requirements.txt
+└── README.md
+```
+
+## ▶️ Como Executar
 
 1. Clone este repositório.
-2. Certifique-se de que os microdados do ENEM 2023 estão no caminho correto (`data/raw_inep/DADOS/MICRODADOS_ENEM_2023.csv`).
+2. Certifique-se de ter os microdados do ENEM 2023 no caminho `../portfolio-enem-abstencao/data/raw_inep/DADOS/MICRODADOS_ENEM_2023.csv` (ou ajuste o `CSV_PATH` nos scripts).
 3. Instale as dependências:
 ```bash
-pip install pandas numpy scikit-learn matplotlib seaborn
+pip install -r requirements.txt
 ```
-4. Rode os scripts para gerar os gráficos na pasta `docs/`:
+4. Rode os scripts (nessa ordem):
 ```bash
-python src/ml_evasao.py
-python src/business_insights.py
+python src/ml_evasao.py          # Treina o modelo e gera feature_importance.png
+python src/business_insights.py  # Gera os 3 gráficos de negócio
 ```
-5. Para ver o Web Report, inicie um servidor local na pasta `docs`:
+5. Para visualizar o relatório localmente:
 ```bash
 cd docs
 python -m http.server 8080
+# Acesse http://localhost:8080
 ```
-Acesse `http://localhost:8080` no seu navegador.
+
+## 📋 Fonte dos Dados
+
+- **Microdados Oficiais:** INEP — Microdados do ENEM 2023. Disponíveis em [inep.gov.br](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/enem).
+- **Custo por Candidato:** Estimativa baseada em estudos publicados sobre o custo operacional do ENEM (R$ 146/candidato).
+
+## 👤 Autor
+
+**Jean Ribeiro** — Analista de Dados
+
+---
+
+*Parte de um portfólio de projetos de Ciência de Dados aplicada a dados públicos brasileiros.*
