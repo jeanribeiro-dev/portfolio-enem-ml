@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import roc_auc_score, accuracy_score
+from sklearn.metrics import roc_auc_score, accuracy_score, precision_score, recall_score, f1_score, average_precision_score
 import matplotlib.pyplot as plt
 import seaborn as sns
 import zipfile
@@ -80,9 +80,20 @@ y_prob = rf_model.predict_proba(last_X_test)[:, 1]
 
 acc = accuracy_score(last_y_test, y_pred)
 roc = roc_auc_score(last_y_test, y_prob)
+precision = precision_score(last_y_test, y_pred)
+recall = recall_score(last_y_test, y_pred)
+f1 = f1_score(last_y_test, y_pred)
+pr_auc = average_precision_score(last_y_test, y_prob)
 
-print(f"Acurácia: {acc:.4f}")
+# Calculando o baseline: o que acontece se prevermos sempre a classe majoritária?
+baseline_acc = max(last_y_test.mean(), 1 - last_y_test.mean())
+
+print(f"Acurácia: {acc:.4f} (Baseline: {baseline_acc:.4f})")
 print(f"ROC-AUC: {roc:.4f}")
+print(f"PR-AUC: {pr_auc:.4f}")
+print(f"Precision: {precision:.4f}")
+print(f"Recall: {recall:.4f}")
+print(f"F1-Score: {f1:.4f}")
 
 # Gráfico de Feature Importance (Aprimorado)
 importances = rf_model.feature_importances_ * 100 # Converter para %
