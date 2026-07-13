@@ -1,12 +1,12 @@
-# 🧠 Portfólio: O Custo da Evasão — Machine Learning aplicado ao ENEM (2023)
+﻿# 🧠 Portfólio: O Custo da Evasão — Machine Learning aplicado ao ENEM (2023)
 
 Modelo preditivo de abstenção treinado sobre **3,9 milhões de registros reais** do INEP, com cálculo do impacto financeiro estimado em **R$ 161,5 milhões** desperdiçados em 2023.
 
-> Este projeto é a continuação analítica do [Dashboard de Abstenção](https://github.com/jeancribeiro1982-creator/portfolio-enem-abstencao). Enquanto aquele responde *o quê*, este responde o ***por quê*** e o ***quanto custa***.
+> Este projeto é a continuação analítica do [Dashboard de Abstenção](https://github.com/jeanribeiro-dev/portfolio-enem-abstencao). Enquanto aquele responde *o quê*, este responde o ***por quê*** e o ***quanto custa***.
 
 ## 🔗 Acesse o Relatório Online
 
-👉 **[Clique aqui para acessar o Relatório Executivo](https://jeancribeiro1982-creator.github.io/portfolio-enem-ml/)**
+👉 **[Clique aqui para acessar o Relatório Executivo](https://jeanribeiro-dev.github.io/portfolio-enem-ml/)**
 
 ## 💡 Motivação
 
