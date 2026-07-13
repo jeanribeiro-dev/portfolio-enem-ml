@@ -60,11 +60,11 @@ O arquivo de microdados do ENEM 2023 tem **3,9 milhões de linhas** e pesa ~1,7 
 
 ```mermaid
 graph LR
-    A[Microdados INEP (1.7GB)] -->|Chunk 1: 200k| B(RandomForest - Warm Start)
-    A -->|Chunk 2: 200k| B
-    A -->|Chunk N| B
-    B --> C[Feature Importance Extract]
-    C --> D[Business Insights Gen]
+    A["Microdados INEP (1.7GB)"] -->|"Chunk 1: 200k"| B("RandomForest - Warm Start")
+    A -->|"Chunk 2: 200k"| B
+    A -->|"Chunk N"| B
+    B --> C["Feature Importance Extract"]
+    C --> D["Business Insights Gen"]
 ```
 
 A solução foi combinar duas técnicas:
